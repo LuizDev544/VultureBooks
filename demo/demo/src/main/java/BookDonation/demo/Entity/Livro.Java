@@ -15,6 +15,7 @@ public class Livro {
     private Integer quantidadePaginas;
     private Integer edicao;
     private String idioma;
+    private String teste;
 
     @Enumerated(EnumType.STRING)
     private StatusLivro status;
