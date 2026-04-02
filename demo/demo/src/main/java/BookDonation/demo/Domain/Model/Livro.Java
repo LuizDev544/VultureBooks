@@ -1,47 +1,46 @@
 package BookDonation.demo.Domain.Model;
 
-import jakarta.persistence.*;
-import lombok.*;
-import java.util.Objects;
 import BookDonation.demo.Domain.Model.ValueObjects.*;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name = "livro")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
+@Table(name = "livros")
 public class Livro {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String titulo;
+    @Embedded
+    private AnoLivro ano;
 
     @Embedded
     private Autor autor;
 
     @Embedded
-    private DetalhesLivros detalhes;
+    private Descricao descricao;
 
-    @Enumerated(EnumType.STRING)
-    private StatusLivro condicao;
+    @Embedded
+    private Genero genero;
 
-    public Long getId() {
-        return this.id;
-    }
+    @Embedded
+    private Idioma idioma;
 
-    public Livro(String titulo, Autor autor, DetalhesLivros detalhes) {
-        this.titulo = Objects.requireNonNull(titulo, "Título é obrigatório");
-        this.autor = Objects.requireNonNull(autor, "Autor é obrigatório");
-        this.detalhes = Objects.requireNonNull(detalhes, "Detalhes são obrigatórios");
-        this.condicao = StatusLivro.DISPONIVEL;
-    }
+    @Embedded
+    private Pagina pagina;
 
-    public void marcarComoDoado() {
-        if (this.condicao.equals(StatusLivro.DOADO)) {
-            throw new IllegalStateException("Livro já foi doado.");
-        }
-        this.condicao = StatusLivro.DOADO;
+    @Embedded 
+    private StatusLivro status;
+
+    protected Livro() {}
+
+    public Livro(AnoLivro ano, Autor autor, Descricao descricao, Genero genero, Idioma idioma, Pagina pagina, StatusLivro status) {
+        this.ano = ano;
+        this.autor = autor;
+        this.descricao = descricao;
+        this.genero = genero;
+        this.idioma = idioma;
+        this.pagina = pagina;
+        this.status = status;
     }
 }
