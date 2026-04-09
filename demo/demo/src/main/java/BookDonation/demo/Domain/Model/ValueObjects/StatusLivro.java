@@ -9,7 +9,6 @@ public class StatusLivro {
 
     public enum TipoStatus {
         DISPONIVEL,
-        RESERVADO,
         DOADO,
         INDISPONIVEL
     }
