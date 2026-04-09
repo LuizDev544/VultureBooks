@@ -1,86 +1,89 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastrar Livro</title>
+    <title>Cadastrar Livro | BookDonation</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../static/Styles/styles.css">
     <link rel="stylesheet" href="../static/Styles/Cadastrar.css">
 </head>
-<body>
+<body class="bg-light">
 
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
-        <div class="card shadow-lg p-4 form-container">
+        <div class="card shadow-lg p-4 form-container" style="max-width: 800px; width: 100%;">
             <h2 class="text-center mb-4 text-primary">Cadastrar Novo Livro</h2>
             
-            <form action="/livros" method="POST">
-
-
+            <form action="/livros/cadastrar" method="POST">
+                
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="titulo" class="form-label">Título do Livro</label>
-                        <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Ex: Harry Potter" required>
+                        <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Ex: O Senhor dos Anéis" required>
                     </div>
+
                     <div class="col-md-6 mb-3">
-                        <label for="genero" class="form-label">Status</label>
-                        <select class="form-select" id="genero" name="genero">
-                            <option selected disabled>Selecione</option>
-                            <option value="fantasia">Disponível</option>
-                            <option value="terror">Indisponível</option>
-                            <option value="romance">Doado</option>
+                        <label for="statusInicial" class="form-label">Status do Livro</label>
+                        <select class="form-select" id="statusInicial" name="statusInicial" required>
+                            <option selected disabled>Selecione o estado atual</option>
+                            <option value="DISPONIVEL">Disponível</option>
+                            <option value="INDISPONIVEL">Indisponível</option>
+                            <option value="DOADO">Doado</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label for="autor" class="form-label">Autor</label>
-                        <input type="text" class="form-control" id="autor" name="autor" required placeholder="Ex: J.K. Rowling">
+                        <label for="nomeAutor" class="form-label">Autor</label>
+                        <input type="text" class="form-control" id="nomeAutor" name="nomeAutor" required placeholder="Ex: J.R.R. Tolkien">
                     </div>
+
                     <div class="col-md-6 mb-3">
-                        <label for="genero" class="form-label">Gênero</label>
-                        <select class="form-select" id="genero" name="genero" required>
-                            <option selected disabled>Escolha...</option>
-                            <option value="fantasia">Fantasia</option>
-                            <option value="terror">Terror</option>
-                            <option value="romance">Romance</option>
-                            <option value="romance">Ficção Científica</option>
-                            <option value="romance">Tecnologia</option>
-                            <option value="romance">História</option>
-                            <option value="romance">Biografia</option>
-                            <option value="romance">Religião</option>
+                        <label for="nomeGenero" class="form-label">Gênero</label>
+                        <select class="form-select" id="nomeGenero" name="nomeGenero" required>
+                            <option selected disabled>Escolha o gênero...</option>
+                            <option value="Fantasia">Fantasia</option>
+                            <option value="Terror">Terror</option>
+                            <option value="Romance">Romance</option>
+                            <option value="Ficcao">Ficção Científica</option>
+                            <option value="Tecnologia">Tecnologia</option>
+                            <option value="Historia">História</option>
+                            <option value="Biografia">Biografia</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-4 mb-3">
-                        <label for="ano" class="form-label">Ano</label>
-                        <input type="number" class="form-control" id="ano" name="ano" placeholder="Ex: 1997" required>
+                        <label for="anoLancamento" class="form-label">Ano de Lançamento</label>
+                        <input type="number" class="form-control" id="anoLancamento" name="anoLancamento" placeholder="Ex: 1954" required>
                     </div>
+
                     <div class="col-md-4 mb-3">
-                        <label for="paginas" class="form-label">Páginas</label>
-                        <input type="number" class="form-control" id="paginas" name="paginas" placeholder="Ex: 500" required >
+                        <label for="quantidadePaginas" class="form-label">Total de Páginas</label>
+                        <input type="number" class="form-control" id="quantidadePaginas" name="quantidadePaginas" placeholder="Ex: 1200" required>
                     </div>
+
                     <div class="col-md-4 mb-3">
-                        <label for="idioma" class="form-label">Idioma</label>
-                        <input type="text" class="form-control" id="idioma" name="idioma" placeholder="Ex: Português" required>
+                        <label for="nomeIdioma" class="form-label">Idioma</label>
+                        <input type="text" class="form-control" id="nomeIdioma" name="nomeIdioma" placeholder="Ex: Português" required>
                     </div>
                 </div>
 
                 <div class="mb-3">
-                    <label for="descricao" class="form-label">Descrição/Resumo</label>
-                    <textarea class="form-control" id="descricao" name="descricao" rows="3" placeholder="Ex: Um livro sobre magia e aventuras"></textarea>
+                    <label for="textoDescricao" class="form-label">Descrição / Resumo</label>
+                    <textarea class="form-control" id="textoDescricao" name="textoDescricao" rows="3" placeholder="Conte um pouco sobre a obra..."></textarea>
                 </div>
 
                 <div class="d-grid gap-2 mt-4">
                     <button type="submit" class="btn btn-primary btn-lg">Salvar Doação</button>
-                    <a href="/" class="btn btn-outline-secondary">Cancelar</a>
+                    <a href="/painel-adm" class="btn btn-outline-secondary">Cancelar</a>
                 </div>
             </form>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

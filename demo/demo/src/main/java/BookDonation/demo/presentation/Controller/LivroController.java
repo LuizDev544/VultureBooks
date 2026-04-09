@@ -3,23 +3,28 @@ package BookDonation.demo.presentation.Controller;
 import BookDonation.demo.presentation.DTO.LivroRequestDTO;
 import BookDonation.demo.Domain.Service.LivroService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@RestController
+@Controller
 @RequestMapping("/livros")
 public class LivroController {
 
     @Autowired
     private LivroService livroService;
 
-    @PostMapping
-    public ResponseEntity<?> cadastrar(@RequestBody LivroRequestDTO dto) {
+    @PostMapping("/cadastrar")
+    public String cadastrar(LivroRequestDTO dto, RedirectAttributes attributes) {
         try {
-            var livroCriado = livroService.criarLivro(dto);
-            return ResponseEntity.ok("Livro criado com ID: " + livroCriado.getId());
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            livroService.criarLivro(dto);
+            
+            attributes.addFlashAttribute("mensagem", "Livro cadastrado com sucesso!");
+            
+            return "redirect:/PainelADM";
+        } catch (Exception e) {
+            attributes.addFlashAttribute("erro", "Erro ao cadastrar: " + e.getMessage());
+            return "redirect:/PainelCadastrar";
         }
     }
 }
