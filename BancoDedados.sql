@@ -1,17 +1,10 @@
-create database DonationBook;
-use DonationBook;
+create database DonationBooks;
+use DonationBooks;
 
-CREATE TABLE livro (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    titulo VARCHAR(255) NOT NULL,
-    autor VARCHAR(255) NOT NULL,
-    descricao TEXT,
-    ano_publicacao INT,
-    quantidade_paginas INT,
-    edicao INT,
-    idioma VARCHAR(50),
-    genero VARCHAR(100),
-    condicao VARCHAR(50)
-);
+select * from livros;
+select * from admin;
+
+delete from livros;
+delete from admin;
 
 INSERT INTO admin (endereco, senha) VALUES ('admin@doacao.com', 'admin123');
