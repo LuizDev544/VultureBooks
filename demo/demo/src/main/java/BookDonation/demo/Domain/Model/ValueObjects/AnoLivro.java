@@ -1,6 +1,5 @@
 package BookDonation.demo.Domain.Model.ValueObjects;
 
-import java.time.LocalDate;
 import jakarta.persistence.Embeddable;
 
 @Embeddable

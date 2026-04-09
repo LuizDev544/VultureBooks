@@ -3,22 +3,21 @@ package BookDonation.demo.Domain.Model.ValueObjects;
 import jakarta.persistence.Embeddable;
 
 @Embeddable
-
 public class Autor {
 
-    private String nome;
+    private String autor;
 
     protected Autor() {}
 
-    public Autor(String nome) {
-        if (nome == null || nome.trim().isEmpty()) {
-            throw new IllegalArgumentException("Nome do Autor tá vazio");
+    public Autor(String autor) {
+        if (autor == null || autor.trim().isEmpty()) {
+            throw new IllegalArgumentException("nome do Autor tá vazio");
         }
         
-        this.nome = nome;
+        this.autor = autor;
     }
 
-    public String getNome() {
-        return nome;
+    public String getAutor() {
+        return autor;
     }
 }

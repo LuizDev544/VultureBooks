@@ -3,8 +3,6 @@ package BookDonation.demo.Domain.Model.ValueObjects;
 import jakarta.persistence.Embeddable;
 
 @Embeddable
-
-
 public class Descricao {
 
     private String descricao;
