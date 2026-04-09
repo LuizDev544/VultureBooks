@@ -17,7 +17,7 @@ public class Descricao {
         this.descricao = Descricao;
     }
 
-    public String getDescricao() {
+    public String getTexto() {
         return descricao;
     }
 }

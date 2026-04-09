@@ -18,7 +18,7 @@ public class Genero {
         this.genero = genero ;
     }
 
-    public String getGenero () {
+    public String getNome () {
         return genero;
     }
 }

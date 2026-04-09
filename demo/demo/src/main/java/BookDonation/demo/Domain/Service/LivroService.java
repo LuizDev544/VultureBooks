@@ -7,6 +7,7 @@ import BookDonation.demo.presentation.DTO.LivroRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 @Service
 public class LivroService {
 
@@ -22,8 +23,12 @@ public class LivroService {
         Pagina pagina       = new Pagina(dto.quantidadePaginas());
         StatusLivro status  = new StatusLivro(dto.statusInicial());
 
-        Livro novoLivro     = new Livro(ano, autor, descricao, genero, idioma, pagina, status);
+        Livro novoLivro     = new Livro(dto.titulo(), ano, autor, descricao, genero, idioma, pagina, status);
 
         return livroRepository.save(novoLivro);
+    }
+
+    public List<Livro> listarTodosOsLivros() {
+        return livroRepository.findAll(); 
     }
 }

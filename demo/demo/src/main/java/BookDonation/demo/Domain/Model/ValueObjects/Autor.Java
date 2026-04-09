@@ -17,7 +17,7 @@ public class Autor {
         this.autor = autor;
     }
 
-    public String getAutor() {
+    public String getNome() {
         return autor;
     }
 }

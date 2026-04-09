@@ -16,7 +16,7 @@ public class AnoLivro {
         this.ano = ano;
     }
     
-    public int getAno(){ 
+    public int getValor(){ 
         return ano; 
     }
 }

@@ -18,7 +18,7 @@ public class Pagina {
         this.paginas = paginas;
     }
 
-    public int getPaginas() {
+    public int getQuantidade() {
         return paginas;
     }
 }

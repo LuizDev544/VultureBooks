@@ -11,6 +11,9 @@ public class Livro {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    private String titulo; 
+
     @Embedded
     private AnoLivro ano;
 
@@ -34,7 +37,8 @@ public class Livro {
 
     protected Livro() {}
 
-    public Livro(AnoLivro ano, Autor autor, Descricao descricao, Genero genero, Idioma idioma, Pagina pagina, StatusLivro status) {
+    public Livro(String titulo, AnoLivro ano, Autor autor, Descricao descricao, Genero genero, Idioma idioma, Pagina pagina, StatusLivro status) {
+        this.titulo = titulo;
         this.ano = ano;
         this.autor = autor;
         this.descricao = descricao;
@@ -44,8 +48,13 @@ public class Livro {
         this.status = status;
     }
 
-    public Long getId() {
-        return id;
-    }
-    
+    public Long getId() { return id; }
+    public String getTitulo() { return titulo; }
+    public AnoLivro getAno() { return ano; }
+    public Autor getAutor() { return autor; }
+    public Descricao getDescricao() { return descricao; }
+    public Genero getGenero() { return genero; }
+    public Idioma getIdioma() { return idioma; }
+    public Pagina getPagina() { return pagina; }
+    public StatusLivro getStatus() { return status; }
 }

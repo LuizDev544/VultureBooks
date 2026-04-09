@@ -18,7 +18,7 @@ public class Idioma {
         this.idioma = idioma;
     }
 
-    public String getIdioma() {
+    public String getNome() {
         return idioma;
     }
 }

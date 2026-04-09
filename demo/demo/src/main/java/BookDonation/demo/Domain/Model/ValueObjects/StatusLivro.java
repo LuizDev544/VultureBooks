@@ -30,7 +30,11 @@ public class StatusLivro {
         return this.valor == TipoStatus.DISPONIVEL;
     }
 
-    public String getStatus() {
+    public String getValor() {
         return valor.name();
+    }
+
+    public static StatusLivro valueOf(String statusInicial) {
+        throw new UnsupportedOperationException("Unimplemented method 'valueOf'");
     }
 }
