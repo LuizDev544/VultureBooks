@@ -39,6 +39,7 @@
     background-color: var(--botao-acao-hover) !important;
 }
 
+<<<<<<< Updated upstream
 .btn-cancelar {
     border: 1px solid var(--cor-borda);
     color: var(--texto-muted);
@@ -46,4 +47,16 @@
     text-align: center;
     padding: 10px;
     border-radius: 6px;
+=======
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3);
+}
+
+@media (max-width: 576px) {
+    .form-container {
+        margin: 10px;
+        padding: 20px !important;
+    }
+>>>>>>> Stashed changes
 }

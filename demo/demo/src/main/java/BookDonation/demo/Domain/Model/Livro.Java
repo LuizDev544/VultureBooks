@@ -48,6 +48,18 @@ public class Livro {
         this.status = status;
     }
 
+
+    public void atualizarDados(String novoTitulo, AnoLivro novoAno, Autor novoAutor, Descricao novaDescricao, Genero novoGenero, Idioma novoIdioma, Pagina novaPagina, StatusLivro novoStatus) {
+        this.titulo = novoTitulo;
+        this.ano = novoAno;
+        this.autor = novoAutor;
+        this.descricao = novaDescricao;
+        this.genero = novoGenero;
+        this.idioma = novoIdioma;
+        this.pagina = novaPagina;
+        this.status = novoStatus;
+    }
+
     public Long getId() { return id; }
     public String getTitulo() { return titulo; }
     public AnoLivro getAno() { return ano; }

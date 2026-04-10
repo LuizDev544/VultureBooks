@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://www.thymeleaf.org"> <head>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org"> 
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel ADM | Vulture Books</title>
@@ -10,6 +11,7 @@
 </head>
 <body>
     <div class="d-flex">
+        
         <nav class="sidebar bg-dark text-white p-3 min-vh-100">
             <h4 class="text-center mb-4 border-bottom pb-3">Vulture Books</h4>
             <ul class="nav flex-column gap-2">
@@ -19,12 +21,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link text-white">
+                    <a href="#" class="nav-link text-white" data-bs-toggle="modal" data-bs-target="#modalEditar">
                         <i class="bi bi-pencil-square me-2"></i> Editar Livros
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link text-white text-danger">
+                    <a href="#" class="nav-link text-white text-danger" data-bs-toggle="modal" data-bs-target="#modalExcluir">
                         <i class="bi bi-trash me-2"></i> Excluir Livros
                     </a>
                 </li>
@@ -36,6 +38,11 @@
         <main class="flex-grow-1 p-4 bg-light">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2>Gerenciamento de Doação</h2>
+                
+                <div th:if="${mensagem}" class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong th:text="${mensagem}"></strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
             </div>
             <div class="card shadow-sm border-0">
                 <div class="card-body p-0">
@@ -50,41 +57,34 @@
                                     <th>Gênero</th>
                                     <th>Páginas</th>
                                     <th>Idioma</th>
-                                    <th>Ano Livro</th>
+                                    <th>Ano</th>
                                     <th>Condição</th>
-                                    <th class="text-center">Ações</th>
                                 </tr>
                             </thead>
                             
                             <tbody>
                                 <tr th:each="livro : ${livros}">
                                     <td th:text="${livro.id}"></td>
-                                    
                                     <td><strong th:text="${livro.titulo}"></strong></td>
-                                    
                                     <td th:text="${livro.descricao.texto}"></td>
                                     <td th:text="${livro.autor.nome}"></td>
                                     <td th:text="${livro.genero.nome}"></td>
-                                    <td th:text="${livro.pagina.quantidade}"></td> <td th:text="${livro.idioma.nome}"></td>
-                                    <td th:text="${livro.ano.valor}"></td> <td>
+                                    <td th:text="${livro.pagina.quantidade}"></td> 
+                                    <td th:text="${livro.idioma.nome}"></td>
+                                    <td th:text="${livro.ano.valor}"></td> 
+                                    <td>
                                         <span th:if="${livro.status.valor == 'DISPONIVEL'}" class="badge bg-success">Disponível</span>
                                         <span th:if="${livro.status.valor == 'INDISPONIVEL'}" class="badge bg-secondary">Indisponível</span>
                                         <span th:if="${livro.status.valor == 'DOADO'}" class="badge bg-primary">Doado</span>
-                                    </td>
-                                    
-                                    <td class="text-center">
-                                        <button class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></button>
-                                        <button class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
                                     </td>
                                 </tr>
                                 
                                 <tr th:if="${#lists.isEmpty(livros)}">
                                     <td colspan="9" class="text-center text-muted py-4">
-                                        Nenhum livro cadastrado ainda. Clique em "Cadastrar Livro" para começar!
+                                        Nenhum livro cadastrado ainda.
                                     </td>
                                 </tr>
                             </tbody>
-
                         </table>
                     </div>
                 </div>
@@ -92,6 +92,65 @@
         </main>
     </div>
 
+    <div class="modal fade" id="modalEditar" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title fw-bold text-dark">Editar Livro</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label for="idLivroEditar" class="form-label">Digite o ID do Livro que deseja alterar:</label>
+                    <input type="number" id="idLivroEditar" class="form-control" placeholder="Ex: 1">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-warning fw-bold text-dark" onclick="buscarParaEditar()">Buscar Livro</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalExcluir" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title fw-bold">Excluir Livro</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label for="idLivroExcluir" class="form-label">Digite o ID do Livro que deseja apagar permanentemente:</label>
+                    <input type="number" id="idLivroExcluir" class="form-control" placeholder="Ex: 1">
+                    <div class="form-text text-danger mt-2"><i class="bi bi-exclamation-triangle"></i> Esta ação não pode ser desfeita.</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger fw-bold" onclick="buscarParaExcluir()">Excluir Livro</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        function buscarParaEditar() {
+            const id = document.getElementById('idLivroEditar').value;
+            if(id) {
+                window.location.href = '/livros/editar/' + id;
+            } else {
+                alert("Por favor, digite um ID válido.");
+            }
+        }
+
+        function buscarParaExcluir() {
+            const id = document.getElementById('idLivroExcluir').value;
+            if(id) {
+                window.location.href = '/livros/excluir/' + id;
+            } else {
+                alert("Por favor, digite um ID válido.");
+            }
+        }
+    </script>
 </body>
 </html>
