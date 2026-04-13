@@ -61,7 +61,7 @@ public class LivroService {
                     
             DetalhesCondicao condicaoAtual = livroExistente.getDetalhesCondicao();
 
-             if (condicaoAtual != null) {
+            if (condicaoAtual != null) {
                 condicaoAtual.atualizarDados(dto.nivelConservacao(), dto.observacoesExtras());
             } else {
                 DetalhesCondicao novaCondicao = new DetalhesCondicao(dto.nivelConservacao(), dto.observacoesExtras());
