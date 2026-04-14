@@ -6,7 +6,7 @@ export const StatusBadge = ({ status }) => {
     DOADO: { class: 'bg-primary', label: 'Doado' }
     }
 
-    const { class: ClassName, label } = config[status] || config.INDISPONIVEL;
+    const { class: className, label } = config[status] || config.INDISPONIVEL;
 
     return <span className={`badge ${className}`}>{label}</span>;
 }
