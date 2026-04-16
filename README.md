@@ -44,8 +44,8 @@ Login Administrativo: Use as credenciais de admin padrão (usuário: admin, senh
 
 Gerenciar Dados: Utilize os endpoints da API REST ou a interface web para gerenciar os registros de livros e administradores.
 
-📂 Estrutura do Projeto
-Plaintext
+## 📂 Estrutura do Projeto
+```markdown
 .
 ├── src
 │   ├── main
@@ -55,24 +55,28 @@ Plaintext
 │   │   │   │   │   ├── DemoApplication.java
 │   │   │   │   │   ├── controller
 │   │   │   │   │   │   ├── AdminController.java
-│   │   │   │   │   │   └── LivroController.java
+│   │   │   │   │   │   ├── LivroController.java
 │   │   │   │   │   ├── repository
 │   │   │   │   │   │   ├── AdminRepository.java
-│   │   │   │   │   │   └── LivroRepository.java
+│   │   │   │   │   │   ├── LivroRepository.java
 │   │   │   │   │   ├── service
 │   │   │   │   │   │   ├── AdminService.java
-│   │   │   │   │   │   └── LivroService.java
+│   │   │   │   │   │   ├── LivroService.java
 │   │   │   │   │   ├── entity
 │   │   │   │   │   │   ├── Admin.java
-│   │   │   │   │   │   └── Livro.java
-│   │   │   │   │   └── dto
-│   │   │   │   │       └── LivroRequestDTO.java
-│   │   │   └── resources
-│   │   │       └── application.properties
-│   │   └── test
-│   │       └── java
-│   └── BancoDedados.sql
-
+│   │   │   │   │   │   ├── Livro.java
+│   │   │   │   │   ├── dto
+│   │   │   │   │   │   ├── LivroRequestDTO.java
+│   │   ├── resources
+│   │   │   ├── application.properties
+│   │   ├── test
+│   │   │   ├── java
+│   │   │   │   ├── com
+│   │   │   │   │   ├── example
+│   │   │   │   │   │   ├── DemoApplicationTests.java
+│   ├── target
+│   ├── BancoDedados.sql
+```
 📸 Demonstração
 (Você pode adicionar capturas de tela aqui para mostrar o seu projeto funcionando)
 
