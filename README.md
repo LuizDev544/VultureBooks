@@ -1,36 +1,51 @@
-# 📚 Book Donation Platform
-The Book Donation Platform is a web application designed to facilitate book donations and management. It provides a user-friendly interface for administrators to manage book collections, track donations, and perform various administrative tasks. The platform is built using Spring Boot, leveraging its robust features for building web applications.
+# 📚 Plataforma de Doação de Livros
 
-## 🚀 Features
-- **Book Management**: Create, read, update, and delete book records
-- **Admin Management**: Manage administrator accounts, including creating, updating, and deleting admin users
-- **Database Integration**: Interact with a database to store and retrieve book and admin data
-- **RESTful API**: Expose RESTful API endpoints for book and admin operations
-- **Security**: Implement authentication and authorization using Spring Security
+A **Plataforma de Doação de Livros** é uma aplicação web desenvolvida para facilitar a doação e o gerenciamento de livros. Ela oferece uma interface amigável para administradores gerenciarem coleções, rastrearem doações e realizarem diversas tarefas administrativas. A plataforma foi construída com **Spring Boot**, aproveitando seus recursos robustos para a construção de aplicações web modernas.
 
-## 🛠️ Tech Stack
-- **Spring Boot**: For building the web application
-- **Spring Data JPA**: For database operations and ORM
-- **Spring Security**: For authentication and authorization
-- **MySQL**: As the database management system
-- **Java**: As the programming language
-- **Jackson**: For JSON serialization and deserialization
+## 🚀 Funcionalidades
 
-## 📦 Installation
-To set up the project, follow these steps:
-1. **Prerequisites**: Ensure you have Java 11 or later, MySQL 8 or later, and Maven 3.6 or later installed.
-2. **Clone the Repository**: Clone the Book Donation Platform repository from GitHub.
-3. **Configure Database**: Update the `application.properties` file with your MySQL database credentials.
-4. **Build the Project**: Run `mvn clean install` to build the project.
-5. **Run the Application**: Execute `mvn spring-boot:run` to start the application.
+- **Gerenciamento de Livros**: Criar, ler, atualizar e excluir (CRUD) registros de livros.
+- **Gerenciamento de Administradores**: Gerenciar contas administrativas, incluindo a criação, atualização e exclusão de usuários admins.
+- **Integração com Banco de Dados**: Interação com banco de dados para armazenar e recuperar dados de livros e administradores.
+- **API RESTful**: Endpoints de API estruturados para operações de livros e administradores.
+- **Segurança**: Implementação de autenticação e autorização utilizando Spring Security.
 
-## 💻 Usage
-1. **Access the Application**: Open a web browser and navigate to `http://localhost:8080`.
-2. **Login as Admin**: Use the default admin credentials (username: `admin`, password: `password`) to log in.
-3. **Manage Books and Admins**: Use the provided RESTful API endpoints or the web interface to manage book and admin records.
+## 🛠️ Tecnologias Utilizadas
 
-## 📂 Project Structure
-```markdown
+- **Spring Boot**: Framework principal para construção da aplicação.
+- **Spring Data JPA**: Para operações de banco de dados e ORM.
+- **Spring Security**: Para autenticação e autorização.
+- **MySQL**: Sistema de gerenciamento de banco de dados.
+- **Java**: Linguagem de programação.
+- **Jackson**: Para serialização e desserialização de JSON.
+
+## 📦 Instalação
+
+Para configurar o projeto localmente, siga estas etapas:
+
+1. **Pré-requisitos**: Certifique-se de ter o Java 11 ou superior, MySQL 8 ou superior e Maven 3.6 ou superior instalados.
+2. **Clonar o Repositório**:
+   ```bash
+   git clone [https://github.com/seu-usuario/seu-repositorio.git](https://github.com/seu-usuario/seu-repositorio.git)
+Configurar o Banco de Dados: Atualize o arquivo src/main/resources/application.properties com as suas credenciais do MySQL.
+
+Build do Projeto:
+
+Bash
+mvn clean install
+Executar a Aplicação:
+
+Bash
+mvn spring-boot:run
+💻 Como Usar
+Acessar a Aplicação: Abra o navegador e acesse http://localhost:8080.
+
+Login Administrativo: Use as credenciais de admin padrão (usuário: admin, senha: password) para logar.
+
+Gerenciar Dados: Utilize os endpoints da API REST ou a interface web para gerenciar os registros de livros e administradores.
+
+📂 Estrutura do Projeto
+Plaintext
 .
 ├── src
 │   ├── main
@@ -40,40 +55,35 @@ To set up the project, follow these steps:
 │   │   │   │   │   ├── DemoApplication.java
 │   │   │   │   │   ├── controller
 │   │   │   │   │   │   ├── AdminController.java
-│   │   │   │   │   │   ├── LivroController.java
+│   │   │   │   │   │   └── LivroController.java
 │   │   │   │   │   ├── repository
 │   │   │   │   │   │   ├── AdminRepository.java
-│   │   │   │   │   │   ├── LivroRepository.java
+│   │   │   │   │   │   └── LivroRepository.java
 │   │   │   │   │   ├── service
 │   │   │   │   │   │   ├── AdminService.java
-│   │   │   │   │   │   ├── LivroService.java
+│   │   │   │   │   │   └── LivroService.java
 │   │   │   │   │   ├── entity
 │   │   │   │   │   │   ├── Admin.java
-│   │   │   │   │   │   ├── Livro.java
-│   │   │   │   │   ├── dto
-│   │   │   │   │   │   ├── LivroRequestDTO.java
-│   │   ├── resources
-│   │   │   ├── application.properties
-│   │   ├── test
-│   │   │   ├── java
-│   │   │   │   ├── com
-│   │   │   │   │   ├── example
-│   │   │   │   │   │   ├── DemoApplicationTests.java
-│   ├── target
-│   ├── BancoDedados.sql
-```
+│   │   │   │   │   │   └── Livro.java
+│   │   │   │   │   └── dto
+│   │   │   │   │       └── LivroRequestDTO.java
+│   │   │   └── resources
+│   │   │       └── application.properties
+│   │   └── test
+│   │       └── java
+│   └── BancoDedados.sql
 
-## 📸 Screenshots
+📸 Demonstração
+(Você pode adicionar capturas de tela aqui para mostrar o seu projeto funcionando)
 
-## 🤝 Contributing
-To contribute to the Book Donation Platform, please fork the repository, make your changes, and submit a pull request.
+🤝 Contribuição
+Para contribuir com a Plataforma de Doação de Livros, faça um fork do repositório, crie uma branch com suas alterações e envie um pull request.
 
-## 📝 License
-The Book Donation Platform is licensed under the MIT License.
+📝 Licença
+Este projeto está licenciado sob a Licença MIT.
 
-## 📬 Contact
-For any questions or concerns, please contact us at [support@example.com](mailto:support@example.com).
+📬 Contato
+Para dúvidas ou sugestões, entre em contato em: luizfernando.carrupt@gmail.com
 
-## 💖 Thanks Message
-This project was made possible by the contributions of many individuals. Thank you to everyone who has contributed to the Book Donation Platform.
-This is written by readme.ai [readme.ai](https://readme-generator-phi.vercel.app/)
+💖 Agradecimentos
+Este projeto foi possível graças à contribuição de diversas pessoas. Muito obrigado a todos que colaboraram com a Plataforma de Doação de Livros.
