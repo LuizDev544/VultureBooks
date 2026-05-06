@@ -8,8 +8,8 @@ import BookDonation.demo.Domain.Model.Admin;
 import java.util.Map;
 
 @RestController // MUDOU AQUI: Agora retorna JSON
-@RequestMapping("/api/admin") // Sugestão: adicione /api para organizar
-@CrossOrigin(origins = "http://localhost:5173") // Libera o React
+@RequestMapping("/api/admin") 
+@CrossOrigin(origins = "http://localhost:3000") // Libera o React
 public class AdminController {
 
     @Autowired

@@ -3,11 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^1.16.0",
     "bootstrap": "^5.3.8",
     "cra-template-redux": "2.0.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
-    "react-scripts": "5.0.1"
+    "react-router-dom": "^7.15.0",
+    "react-scripts": "5.0.1",
+    "styled-components": "^6.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
