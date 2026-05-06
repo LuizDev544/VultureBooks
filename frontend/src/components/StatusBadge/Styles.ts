@@ -1,19 +1,27 @@
 import styled from 'styled-components';
 
-interface ContainerProps {
+interface BadgeProps {
     $status: 'DISPONIVEL' | 'INDISPONIVEL' | 'DOADO';
 }
 
-export const BadgeContainer = styled.span<ContainerProps>`
-    padding: 5px 12px;
+export const BadgeContainer = styled.span<BadgeProps>`
+    padding: 4px 12px;
     border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: bold;
-    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: ${props => props.theme.colors.textLight};
 
-    background-color: ${({ $status }) => {
-        if ($status === 'DISPONIVEL') return '#2ecc71';
-        if ($status === 'INDISPONIVEL') return '#e74c3c'; 
-        return '#f1c40f'; 
+    background-color: ${({ theme, $status }) => {
+        switch ($status) {
+        case 'DISPONIVEL':
+            return theme.colors.success;
+        case 'INDISPONIVEL':
+            return theme.colors.danger;
+        case 'DOADO':
+            return theme.colors.warning;
+        default:
+            return '#6b7280';
+        }
     }};
 `;

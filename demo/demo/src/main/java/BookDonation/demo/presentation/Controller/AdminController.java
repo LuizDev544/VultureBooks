@@ -1,61 +1,35 @@
 package BookDonation.demo.presentation.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import jakarta.servlet.http.HttpSession; 
-
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import BookDonation.demo.Domain.Service.*;
 import BookDonation.demo.Domain.Model.Admin;
+import java.util.Map;
 
-@Controller
-@RequestMapping("/admin")
+@RestController // MUDOU AQUI: Agora retorna JSON
+@RequestMapping("/api/admin") // Sugestão: adicione /api para organizar
+@CrossOrigin(origins = "http://localhost:5173") // Libera o React
 public class AdminController {
 
     @Autowired
     private AdminService adminService;
 
-    // Exibe a página de login do administrador
-    @GetMapping("/login")
-    public String loginPage() {
-        return "LoginAdm"; 
-    }
+    // O React não precisa do GetMapping /login, pois ele mesmo renderiza a tela
 
-    // Processa a autenticação e gerencia a sessão do usuário
     @PostMapping("/login")
-    public String realizarLogin(@RequestParam String email, 
-                                @RequestParam String senha, 
-                                HttpSession session, 
-                                RedirectAttributes attributes) {
+    public ResponseEntity<?> realizarLogin(@RequestBody Map<String, String> payload) {
+        String email = payload.get("email");
+        String senha = payload.get("senha");
         
         if (adminService.validarAcesso(email, senha)) {
-            
             Admin adminLogado = adminService.buscarPorEmail(email);
             
-            // Armazena o ID do admin na sessão para controle de acesso
-            session.setAttribute("adminLogadoId", adminLogado.getId());
-            
-            return "redirect:/livros/painel";
+            // Retorna os dados do admin em vez de redirecionar
+            return ResponseEntity.ok(adminLogado);
         }
         
-        attributes.addFlashAttribute("erro", "Email ou senha incorretos!");
-        return "redirect:/admin/login";
-    }
-
-    // Exibe a tela principal do painel administrativo
-    @GetMapping("/painel")
-    public String painelPage() {
-        return "PainelAdm"; 
-    }
-    
-    // Finaliza a sessão atual e redireciona para o login
-    @GetMapping("/logout")
-    public String realizarLogout(HttpSession session) {
-        session.invalidate(); // Destrói a sessão
-        return "redirect:/admin/login";
+        // Retorna erro 401 (Não autorizado) se falhar
+        return ResponseEntity.status(401).body("Email ou senha incorretos!");
     }
 }

@@ -1,15 +1,14 @@
 import React from 'react';
-import * as S from './Styles';
+import * as S from './styles';
 
 interface StatusBadgeProps {
-    label: string;
     status: 'DISPONIVEL' | 'INDISPONIVEL' | 'DOADO';
 }
 
-const StatusBadge: React.FC<StatusBadgeProps> = ({ label, status }) => {
+const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
     return (
         <S.BadgeContainer $status={status}>
-            {label}
+        {status.replace('_', ' ')}
         </S.BadgeContainer>
     );
 };
