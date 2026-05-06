@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import LoginPage from '@/features/auth/LoginPage';
+import LoginPage from '../features/auth/LoginPage';
 
 const AppRoutes: React.FC = () => {
     return (

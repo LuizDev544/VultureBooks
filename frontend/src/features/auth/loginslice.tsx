@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import './LoginADM.css';
 
-const Login: React.FC<{}> = () => {
+const Login: React.FC = () => {
     // Definimos o estado com os campos corretos
     const [credentials, setCredentials] = useState({ email: '', senha: '' });
     // Ajustamos o erro para aceitar string ou null
