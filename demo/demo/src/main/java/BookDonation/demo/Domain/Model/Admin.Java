@@ -1,17 +1,17 @@
 package BookDonation.demo.Domain.Model;
 
 import java.util.List;
-
+import java.util.Optional;
 import BookDonation.demo.Domain.Model.ValueObjects.Email;
 import BookDonation.demo.Domain.Model.ValueObjects.Senha;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 @Table(name = "admin")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-
 public class Admin {
 
     @Id
@@ -32,15 +32,13 @@ public class Admin {
         this.senha = senha;
     }
 
-    public boolean autenticar(String senhaDigitada) {
-        if (senhaDigitada == null) {
-            return false;
-        }
-        return this.senha != null && this.senha.verificar(senhaDigitada);
+    public boolean autenticarComCriptografia(String senhaDigitada, BCryptPasswordEncoder encoder) {
+        return Optional.ofNullable(this.senha)
+                .map(valorSenha -> Boolean.valueOf(valorSenha.verificarComHash(senhaDigitada, encoder)))
+                .orElse(false);
     }
 
     public Long getId() {
         return this.id;
     }
-
 }
