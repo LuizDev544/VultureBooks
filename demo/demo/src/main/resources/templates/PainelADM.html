@@ -12,7 +12,7 @@
 <body>
     <div class="d-flex">
         
-        <nav class="sidebar bg-dark text-white p-3 min-vh-100">
+        <nav class="sidebar bg-dark text-white p-3 min-vh-100 d-flex flex-column" style="width: 240px;">
             <h4 class="text-center mb-4 border-bottom pb-3">Vulture Books</h4>
             <ul class="nav flex-column gap-2">
                 <li class="nav-item">
@@ -30,11 +30,17 @@
                         <i class="bi bi-trash me-2"></i> Excluir Livros
                     </a>
                 </li>
+                <li class="nav-item border-top pt-2 mt-2">
+                    <a href="/livros/historico" class="nav-link text-info">
+                        <i class="bi bi-shield-check me-2"></i> Histórico (Decorator)
+                    </a>
+                </li>
             </ul>
             <div class="mt-auto pt-5">
                 <a href="/admin/login" class="btn btn-outline-light btn-sm w-100">Sair</a>
             </div>
         </nav>
+
         <main class="flex-grow-1 p-4 bg-light">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2>Gerenciamento de Doação</h2>
@@ -44,6 +50,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             </div>
+            
             <div class="card shadow-sm border-0">
                 <div class="card-body p-0">
                     <div class="table-responsive">
@@ -90,7 +97,7 @@
                                 </tr>
                                 
                                 <tr th:if="${#lists.isEmpty(livros)}">
-                                    <td colspan="9" class="text-center text-muted py-4">
+                                    <td colspan="10" class="text-center text-muted py-4">
                                         Nenhum livro cadastrado ainda.
                                     </td>
                                 </tr>
