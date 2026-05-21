@@ -5,25 +5,30 @@ import BookDonation.demo.Domain.Model.ValueObjects.*;
 import BookDonation.demo.Domain.Repository.AdminRepository;
 import BookDonation.demo.Domain.Repository.LivroRepository;
 import BookDonation.demo.presentation.DTO.LivroRequestDTO;
+import BookDonation.demo.Domain.Event.LivroAlteradoEvent;
 import jakarta.transaction.Transactional;
 import BookDonation.demo.Domain.Model.Admin;
 import BookDonation.demo.Domain.Model.DetalhesCondicao;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class LivroService {
 
-    @Autowired
-    private LivroRepository livroRepository;
+    private final LivroRepository livroRepository;
+    private final AdminRepository adminRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
-    @Autowired
-    private AdminRepository adminRepository;
+    public LivroService(LivroRepository livroRepository, AdminRepository adminRepository, ApplicationEventPublisher eventPublisher) {
+        this.livroRepository = livroRepository;
+        this.adminRepository = adminRepository;
+        this.eventPublisher = eventPublisher;
+    }
 
     public Livro criarLivro(LivroRequestDTO dto, Long idAdmin) {
-        
         Admin adminResponsavel = adminRepository.findById(idAdmin)
             .orElseThrow(() -> new IllegalArgumentException("Administrador não encontrado no banco de dados."));
 
@@ -39,15 +44,23 @@ public class LivroService {
         DetalhesCondicao detalhes = new DetalhesCondicao(dto.nivelConservacao(), dto.observacoesExtras());
 
         Livro novoLivro = new Livro(titulo, ano, autor, descricao, genero, idioma, pagina, status);
-
         novoLivro.setAdminRegistrador(adminResponsavel); 
         novoLivro.setDetalhesCondicao(detalhes); 
 
-        return livroRepository.save(novoLivro);
+        Livro livroSalvo = livroRepository.save(novoLivro);
+
+        this.eventPublisher.publishEvent(new LivroAlteradoEvent(
+            livroSalvo.getId(), 
+            dto.titulo(), 
+            "CADASTRO", 
+            idAdmin
+        ));
+
+        return livroSalvo;
     }
 
     @Transactional
-    public Livro atualizarLivro(Long id, LivroRequestDTO dto) {
+    public Livro atualizarLivro(Long id, LivroRequestDTO dto, Long idAdmin) {
         Livro livroExistente = buscarPorId(id);
 
         Titulo titulo       = new Titulo(dto.titulo());
@@ -60,15 +73,32 @@ public class LivroService {
         StatusLivro status  = new StatusLivro(dto.statusInicial());
 
         livroExistente.atualizarDados(titulo, ano, autor, descricao, genero, idioma, pagina, status);
-        
         livroExistente.atualizarCondicao(dto.nivelConservacao(), dto.observacoesExtras());
 
-        return livroRepository.save(livroExistente);
+        Livro livroAtualizado = livroRepository.save(livroExistente);
+
+        this.eventPublisher.publishEvent(new LivroAlteradoEvent(
+            livroAtualizado.getId(), 
+            dto.titulo(), 
+            "EDICAO", 
+            idAdmin
+        ));
+
+        return livroAtualizado;
     }
-    public void excluirLivro(Long id) {
+
+    public void excluirLivro(Long id, Long idAdmin) {
         Livro livro = buscarPorId(id);
+        String nomeTitulo = livro.getTitulo() != null ? livro.getTitulo().toString() : "Desconhecido";
         
         livroRepository.delete(livro);
+
+        this.eventPublisher.publishEvent(new LivroAlteradoEvent(
+            id, 
+            nomeTitulo, 
+            "EXCLUSAO", 
+            idAdmin
+        ));
     }
 
     public List<Livro> listarTodosOsLivros() {
