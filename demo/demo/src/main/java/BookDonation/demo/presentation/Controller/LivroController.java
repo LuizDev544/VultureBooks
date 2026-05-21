@@ -61,16 +61,11 @@ public class LivroController {
 
     // Salva as alterações de um livro existente
     @PostMapping("/editar/{id}")
-    public String atualizarLivro(@PathVariable Long id, LivroRequestDTO dto, HttpSession session, RedirectAttributes attributes) {
+    public String atualizarLivro(@PathVariable Long id, LivroRequestDTO dto, RedirectAttributes attributes) {
         try {
-            Long idAdminLogado = (Long) session.getAttribute("adminLogadoId");
-
-            if (idAdminLogado == null) {
-                return "redirect:/admin/login";
-            }
-
-            livroService.atualizarLivro(id, dto, idAdminLogado);
-            attributes.addFlashAttribute("mensagem", "Livro updated com sucesso!");
+            livroService.atualizarLivro(id, dto);
+            
+            attributes.addFlashAttribute("mensagem", "Livro atualizado com sucesso!");
         } catch (Exception e) {
             attributes.addFlashAttribute("erro", "Erro ao atualizar: " + e.getMessage());
         }
@@ -89,15 +84,10 @@ public class LivroController {
 
     // Remove um livro por ID com tratamento de erro
     @GetMapping("/excluir/{id}")
-    public String excluirLivro(@PathVariable Long id, HttpSession session, RedirectAttributes attributes) {
+    public String excluirLivro(@PathVariable Long id, RedirectAttributes attributes) {
         try {
-            Long idAdminLogado = (Long) session.getAttribute("adminLogadoId");
-
-            if (idAdminLogado == null) {
-                return "redirect:/admin/login";
-            }
-
-            livroService.excluirLivro(id, idAdminLogado);
+            livroService.excluirLivro(id);
+            
             attributes.addFlashAttribute("mensagem", "Livro excluído com sucesso!");
             
         } catch (IllegalArgumentException e) {
