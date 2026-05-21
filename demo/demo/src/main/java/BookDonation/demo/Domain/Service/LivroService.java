@@ -6,17 +6,18 @@ import BookDonation.demo.Domain.Model.DetalhesCondicao;
 import BookDonation.demo.Domain.Model.ValueObjects.*;
 import BookDonation.demo.Domain.Repository.AdminRepository;
 import BookDonation.demo.Domain.Repository.LivroRepository;
-import BookDonation.demo.Domain.Factories.LivroFactory;
 import BookDonation.demo.presentation.DTO.LivroRequestDTO;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class LivroService {
+@Primary
+public class LivroService implements LivroOperations {
 
     @Autowired
     private LivroRepository livroRepository;
@@ -24,23 +25,23 @@ public class LivroService {
     @Autowired
     private AdminRepository adminRepository;
 
-    @Autowired
-    private LivroFactory livroFactory; 
-
     public Livro criarLivro(LivroRequestDTO dto, Long idAdmin) {
         Admin adminResponsavel = adminRepository.findById(idAdmin)
             .orElseThrow(() -> new IllegalArgumentException("Administrador não encontrado no banco de dados."));
 
-        Object[] vos = livroFactory.criarValueObjectsDoLivro(dto);
-        DetalhesCondicao detalhes = livroFactory.criarDetalhesCondicao(dto);
-
         Livro novoLivro = new Livro(
-            (Titulo) vos[0], (AnoLivro) vos[1], (Autor) vos[2], (Descricao) vos[3],
-            (Genero) vos[4], (Idioma) vos[5], (Pagina) vos[6], (StatusLivro) vos[7]
+            new Titulo(dto.titulo()),
+            new AnoLivro(dto.anoLancamento()),
+            new Autor(dto.nomeAutor()),
+            new Descricao(dto.textoDescricao()),
+            new Genero(dto.nomeGenero()),
+            new Idioma(dto.nomeIdioma()),
+            new Pagina(dto.quantidadePaginas()),
+            new StatusLivro(dto.statusInicial())
         );
 
         novoLivro.setAdminRegistrador(adminResponsavel); 
-        novoLivro.setDetalhesCondicao(detalhes); 
+        novoLivro.setDetalhesCondicao(new DetalhesCondicao(dto.nivelConservacao(), dto.observacoesExtras())); 
 
         return livroRepository.save(novoLivro);
     }
@@ -49,11 +50,15 @@ public class LivroService {
     public Livro atualizarLivro(Long id, LivroRequestDTO dto) {
         Livro libroExistente = buscarPorId(id);
 
-        Object[] vos = livroFactory.criarValueObjectsDoLivro(dto);
-
         libroExistente.atualizarDados(
-            (Titulo) vos[0], (AnoLivro) vos[1], (Autor) vos[2], (Descricao) vos[3],
-            (Genero) vos[4], (Idioma) vos[5], (Pagina) vos[6], (StatusLivro) vos[7]
+            new Titulo(dto.titulo()),
+            new AnoLivro(dto.anoLancamento()),
+            new Autor(dto.nomeAutor()),
+            new Descricao(dto.textoDescricao()),
+            new Genero(dto.nomeGenero()),
+            new Idioma(dto.nomeIdioma()),
+            new Pagina(dto.quantidadePaginas()),
+            new StatusLivro(dto.statusInicial())
         );
         
         libroExistente.atualizarCondicao(dto.nivelConservacao(), dto.observacoesExtras());
@@ -65,7 +70,6 @@ public class LivroService {
         if (!livroRepository.existsById(id)) {
             throw new IllegalArgumentException("Livro não encontrado no banco de dados.");
         }
-        
         livroRepository.deleteById(id);
     }
 
@@ -73,7 +77,7 @@ public class LivroService {
         return livroRepository.findAll(); 
     }
 
-    public Livro buscarPorId(Long id) {
+    public Livro buscarPorId(@NonNull Long id) {
         return livroRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Livro não encontrado no banco de dados."));
     }
