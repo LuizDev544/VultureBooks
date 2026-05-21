@@ -23,8 +23,6 @@ public class AdminController {
 
     @GetMapping("/login")
     public String loginPage() {
-        // LINHA TEMPORÁRIA: Gerar o hash exato do seu ambiente
-        System.out.println("HASH_GERADO_AQUI: " + new BCryptPasswordEncoder().encode("12345678"));
         return "LoginAdm"; 
     }
 
