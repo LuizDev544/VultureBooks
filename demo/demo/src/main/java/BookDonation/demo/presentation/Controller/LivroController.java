@@ -7,6 +7,7 @@ import BookDonation.demo.Domain.Model.*;
 import BookDonation.demo.Domain.Service.*;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -16,7 +17,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class LivroController {
 
     @Autowired
-    private LivroService livroService;
+    @Qualifier("livroHistoricoDecorator") // Força o Spring a usar o Decorator com Histórico
+    private LivroOperations livroService; // Usando a interface diretamente
+
+    @Autowired
+    private BookDonation.demo.Domain.Repository.HistoricoRepository historicoRepository;
 
     // Exibe a tela de formulário para novo cadastro
     @GetMapping("/cadastrar")
@@ -34,6 +39,7 @@ public class LivroController {
                 return "redirect:/admin/login";
             }
 
+            // Passa pelo Decorator e gera o log de histórico automaticamente!
             livroService.criarLivro(dto, idAdminLogado);
             
             attributes.addFlashAttribute("mensagem", "Livro cadastrado com sucesso!");
@@ -49,6 +55,7 @@ public class LivroController {
     @GetMapping("/editar/{id}")
     public String mostrarTelaEditar(@PathVariable Long id, Model model, RedirectAttributes attributes) {
         try {
+            // Chamada limpa e segura através da interface
             Livro livro = livroService.buscarPorId(id);
             model.addAttribute("livro", livro);
             return "PainelEditar"; 
@@ -63,6 +70,7 @@ public class LivroController {
     @PostMapping("/editar/{id}")
     public String atualizarLivro(@PathVariable Long id, LivroRequestDTO dto, RedirectAttributes attributes) {
         try {
+            // Passa pelo Decorator registrando a atualização no histórico!
             livroService.atualizarLivro(id, dto);
             
             attributes.addFlashAttribute("mensagem", "Livro atualizado com sucesso!");
@@ -75,6 +83,7 @@ public class LivroController {
     // Lista todos os livros no painel de administração
     @GetMapping("/painel")
     public String mostrarPainelAdm(Model model) {
+        // Chamada direta corrigida (Sem o casting que quebrava o sistema)
         List<Livro> listaDeLivros = livroService.listarTodosOsLivros();
         
         model.addAttribute("livros", listaDeLivros);
@@ -86,6 +95,7 @@ public class LivroController {
     @GetMapping("/excluir/{id}")
     public String excluirLivro(@PathVariable Long id, RedirectAttributes attributes) {
         try {
+            // Chamada corrigida usando a interface
             livroService.excluirLivro(id);
             
             attributes.addFlashAttribute("mensagem", "Livro excluído com sucesso!");
@@ -102,8 +112,19 @@ public class LivroController {
     // Alterna a disponibilidade (status) do livro
     @PostMapping("/disponibilizar/{id}") 
     public String disponibilizar(@PathVariable Long id, RedirectAttributes attributes) {
+        // Chamada corrigida usando a interface
         livroService.alternarDisponibilidade(id);
         attributes.addFlashAttribute("mensagem", "Livro liberado com sucesso!");
         return "redirect:/livros/painel"; 
+    }
+
+    // Rota para ver o histórico no front-end
+    @GetMapping("/historico")
+    public String mostrarTelaHistorico(Model model) {
+        // Busca todos os logs salvos pelo Decorator
+        List<Historico> listaHistorico = historicoRepository.findAll();
+        
+        model.addAttribute("historicos", listaHistorico);
+        return "PainelHistorico";
     }
 }

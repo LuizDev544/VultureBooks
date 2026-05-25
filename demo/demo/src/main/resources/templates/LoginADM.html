@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/Styles/Global.css">
@@ -16,14 +16,14 @@
             <div th:if="${erro}" style="color: #ff4d4d; background-color: #ffe6e6; padding: 10px; border-radius: 5px; text-align: center; margin-bottom: 15px;">
                 <span th:text="${erro}"></span>
             </div>
-            <form action="/admin/login" method="POST">
+            <form th:action="@{/admin/login}" method="POST">
                 <div class="input-group">
-                    <label>Email</label>
-                    <input type="email" name="email" placeholder="Digite seu email">
+                    <label for="emailInput">Email</label>
+                    <input type="email" id="emailInput" name="email" placeholder="Digite seu email" required>
                 </div>
                 <div class="input-group">
-                    <label>Senha</label>
-                    <input type="password" name="senha" placeholder="Digite sua senha">
+                    <label for="senhaInput">Senha</label>
+                    <input type="password" id="senhaInput" name="senha" placeholder="Digite sua senha" required>
                 </div>
                 <button type="submit" class="login-btn">Entrar</button>
             </form>

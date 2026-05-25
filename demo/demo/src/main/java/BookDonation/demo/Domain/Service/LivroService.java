@@ -1,20 +1,23 @@
 package BookDonation.demo.Domain.Service;
 
 import BookDonation.demo.Domain.Model.Livro;
+import BookDonation.demo.Domain.Model.Admin;
+import BookDonation.demo.Domain.Model.DetalhesCondicao;
 import BookDonation.demo.Domain.Model.ValueObjects.*;
 import BookDonation.demo.Domain.Repository.AdminRepository;
 import BookDonation.demo.Domain.Repository.LivroRepository;
 import BookDonation.demo.presentation.DTO.LivroRequestDTO;
 import jakarta.transaction.Transactional;
-import BookDonation.demo.Domain.Model.Admin;
-import BookDonation.demo.Domain.Model.DetalhesCondicao;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
-public class LivroService {
+@Primary
+public class LivroService implements LivroOperations {
 
     @Autowired
     private LivroRepository livroRepository;
@@ -23,66 +26,65 @@ public class LivroService {
     private AdminRepository adminRepository;
 
     public Livro criarLivro(LivroRequestDTO dto, Long idAdmin) {
-        
         Admin adminResponsavel = adminRepository.findById(idAdmin)
             .orElseThrow(() -> new IllegalArgumentException("Administrador não encontrado no banco de dados."));
 
-        Titulo titulo       = new Titulo(dto.titulo());
-        AnoLivro ano        = new AnoLivro(dto.anoLancamento());
-        Autor autor         = new Autor(dto.nomeAutor());
-        Descricao descricao = new Descricao(dto.textoDescricao());
-        Genero genero       = new Genero(dto.nomeGenero());
-        Idioma idioma       = new Idioma(dto.nomeIdioma());
-        Pagina pagina       = new Pagina(dto.quantidadePaginas());
-        StatusLivro status  = new StatusLivro(dto.statusInicial());
-
-        DetalhesCondicao detalhes = new DetalhesCondicao(dto.nivelConservacao(), dto.observacoesExtras());
-
-        Livro novoLivro = new Livro(titulo, ano, autor, descricao, genero, idioma, pagina, status);
+        Livro novoLivro = new Livro(
+            new Titulo(dto.titulo()),
+            new AnoLivro(dto.anoLancamento()),
+            new Autor(dto.nomeAutor()),
+            new Descricao(dto.textoDescricao()),
+            new Genero(dto.nomeGenero()),
+            new Idioma(dto.nomeIdioma()),
+            new Pagina(dto.quantidadePaginas()),
+            new StatusLivro(dto.statusInicial())
+        );
 
         novoLivro.setAdminRegistrador(adminResponsavel); 
-        novoLivro.setDetalhesCondicao(detalhes); 
+        novoLivro.setDetalhesCondicao(new DetalhesCondicao(dto.nivelConservacao(), dto.observacoesExtras())); 
 
         return livroRepository.save(novoLivro);
     }
 
     @Transactional
     public Livro atualizarLivro(Long id, LivroRequestDTO dto) {
-        Livro livroExistente = buscarPorId(id);
+        Livro libroExistente = buscarPorId(id);
 
-        Titulo titulo       = new Titulo(dto.titulo());
-        AnoLivro ano        = new AnoLivro(dto.anoLancamento());
-        Autor autor         = new Autor(dto.nomeAutor());
-        Descricao descricao = new Descricao(dto.textoDescricao());
-        Genero genero       = new Genero(dto.nomeGenero());
-        Idioma idioma       = new Idioma(dto.nomeIdioma());
-        Pagina pagina       = new Pagina(dto.quantidadePaginas());
-        StatusLivro status  = new StatusLivro(dto.statusInicial());
-
-        livroExistente.atualizarDados(titulo, ano, autor, descricao, genero, idioma, pagina, status);
+        libroExistente.atualizarDados(
+            new Titulo(dto.titulo()),
+            new AnoLivro(dto.anoLancamento()),
+            new Autor(dto.nomeAutor()),
+            new Descricao(dto.textoDescricao()),
+            new Genero(dto.nomeGenero()),
+            new Idioma(dto.nomeIdioma()),
+            new Pagina(dto.quantidadePaginas()),
+            new StatusLivro(dto.statusInicial())
+        );
         
-        livroExistente.atualizarCondicao(dto.nivelConservacao(), dto.observacoesExtras());
+        libroExistente.atualizarCondicao(dto.nivelConservacao(), dto.observacoesExtras());
 
-        return livroRepository.save(livroExistente);
+        return livroRepository.save(libroExistente);
     }
-    public void excluirLivro(Long id) {
-        Livro livro = buscarPorId(id);
-        
-        livroRepository.delete(livro);
+
+    public void excluirLivro(@NonNull Long id) {
+        if (!livroRepository.existsById(id)) {
+            throw new IllegalArgumentException("Livro não encontrado no banco de dados.");
+        }
+        livroRepository.deleteById(id);
     }
 
     public List<Livro> listarTodosOsLivros() {
         return livroRepository.findAll(); 
     }
 
-    public Livro buscarPorId(Long id) {
-        return livroRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Livro não encontrado no banco de dados."));
+    public Livro buscarPorId(@NonNull Long id) {
+        return livroRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Livro não encontrado no banco de dados."));
     }
 
     @Transactional
     public void alternarDisponibilidade(Long id) {
-        Livro livro = livroRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Livro não encontrado no banco de dados."));
+        Livro livro = buscarPorId(id);
         livro.tornarDisponivel();
     }
 }
