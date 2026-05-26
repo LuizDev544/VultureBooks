@@ -29,16 +29,16 @@ public class LivroHistoricoDecorator implements LivroOperations {
     }
 
     @Override
-    public Livro atualizarLivro(Long id, LivroRequestDTO dto) {
-        Livro livroAtualizado = livroServiceOriginal.atualizarLivro(id, dto);
-        historicoRepository.save(new Historico("ATUALIZAR", id, null));
+    public Livro atualizarLivro(Long id, LivroRequestDTO dto, Long idAdmin) {
+        Livro livroAtualizado = livroServiceOriginal.atualizarLivro(id, dto, idAdmin);
+        historicoRepository.save(new Historico("ATUALIZAR", id, idAdmin));
         return livroAtualizado;
     }
 
-    // Métodos novos: Apenas repassam o comando direto para o service original sem gerar log
     @Override
-    public void excluirLivro(Long id) {
-        livroServiceOriginal.excluirLivro(id);
+    public void excluirLivro(Long id, Long idAdmin) {
+        livroServiceOriginal.excluirLivro(id, idAdmin);
+        historicoRepository.save(new Historico("DELETAR", id, idAdmin));
     }
 
     @Override

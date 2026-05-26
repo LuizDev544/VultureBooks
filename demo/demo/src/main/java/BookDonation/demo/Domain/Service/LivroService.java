@@ -47,7 +47,7 @@ public class LivroService implements LivroOperations {
     }
 
     @Transactional
-    public Livro atualizarLivro(Long id, LivroRequestDTO dto) {
+    public Livro atualizarLivro(Long id, LivroRequestDTO dto, Long idAdmin) {
         Livro libroExistente = buscarPorId(id);
 
         libroExistente.atualizarDados(
@@ -66,7 +66,7 @@ public class LivroService implements LivroOperations {
         return livroRepository.save(libroExistente);
     }
 
-    public void excluirLivro(@NonNull Long id) {
+    public void excluirLivro(@NonNull Long id, Long idAdmin) {
         if (!livroRepository.existsById(id)) {
             throw new IllegalArgumentException("Livro não encontrado no banco de dados.");
         }

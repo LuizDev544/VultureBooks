@@ -55,6 +55,7 @@
                                     <td>
                                         <span th:if="${h.acao == 'CRIAR'}" class="badge bg-success">Criação</span>
                                         <span th:if="${h.acao == 'ATUALIZAR'}" class="badge bg-warning text-dark">Edição</span>
+                                        <span th:if="${h.acao == 'DELETAR'}" class="badge bg-danger">Exclusão</span>
                                     </td>
                                     <td th:text="${h.idLivro}"></td>
                                     <td th:text="${h.idAdmin != null ? h.idAdmin : 'N/A'}"></td>

@@ -66,12 +66,16 @@ public class LivroController {
         }
     }
 
-    // Salva as alterações de um livro existente
     @PostMapping("/editar/{id}")
-    public String atualizarLivro(@PathVariable Long id, LivroRequestDTO dto, RedirectAttributes attributes) {
+    public String atualizarLivro(@PathVariable Long id, LivroRequestDTO dto, HttpSession session, RedirectAttributes attributes) {
         try {
-            // Passa pelo Decorator registrando a atualização no histórico!
-            livroService.atualizarLivro(id, dto);
+            Long idAdminLogado = (Long) session.getAttribute("adminLogadoId");
+
+            if (idAdminLogado == null) {
+                return "redirect:/admin/login";
+            }
+
+            livroService.atualizarLivro(id, dto, idAdminLogado);
             
             attributes.addFlashAttribute("mensagem", "Livro atualizado com sucesso!");
         } catch (Exception e) {
@@ -80,7 +84,6 @@ public class LivroController {
         return "redirect:/livros/painel";
     }
 
-    // Lista todos os livros no painel de administração
     @GetMapping("/painel")
     public String mostrarPainelAdm(Model model) {
         // Chamada direta corrigida (Sem o casting que quebrava o sistema)
@@ -91,12 +94,16 @@ public class LivroController {
         return "PainelADM";
     }
 
-    // Remove um livro por ID com tratamento de erro
     @GetMapping("/excluir/{id}")
-    public String excluirLivro(@PathVariable Long id, RedirectAttributes attributes) {
+    public String excluirLivro(@PathVariable Long id, HttpSession session, RedirectAttributes attributes) {
         try {
-            // Chamada corrigida usando a interface
-            livroService.excluirLivro(id);
+            Long idAdminLogado = (Long) session.getAttribute("adminLogadoId");
+            
+            if (idAdminLogado == null) {
+                return "redirect:/admin/login";
+            }
+
+            livroService.excluirLivro(id, idAdminLogado);
             
             attributes.addFlashAttribute("mensagem", "Livro excluído com sucesso!");
             
