@@ -5,6 +5,12 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.ui.Model;
 import BookDonation.demo.Domain.Model.*;
 import BookDonation.demo.Domain.Service.*;
+import BookDonation.demo.Domain.Service.Notificacao.EmailDecorator;
+import BookDonation.demo.Domain.Service.Notificacao.FacebookDecorator;
+import BookDonation.demo.Domain.Service.Notificacao.Notificador;
+import BookDonation.demo.Domain.Service.Notificacao.NotificadorBase;
+import BookDonation.demo.Domain.Service.Notificacao.WhatsAppDecorator;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -138,44 +144,44 @@ public class LivroController {
         return "PainelHistorico";
     }
     
-    // Rota para notificar múltiplos canais a partir do histórico
+
+    // Decorator de Multiplas Escolhas no Painel de Histórico
     @PostMapping("/notificar/multiplos")
     public String notificarMultiplos(
-        @RequestParam Long logId,
-        @RequestParam(required = false) List<String> canais, 
-        @RequestParam(required = false) String emailDestino,
-        RedirectAttributes attributes) {
-    
-    if (canais == null || canais.isEmpty()) {
-        attributes.addFlashAttribute("erro", "Você precisa selecionar pelo menos um canal de notificação.");
+            @RequestParam Long logId,
+            @RequestParam(required = false) List<String> canais, 
+            @RequestParam(required = false) String emailDestino,
+            RedirectAttributes attributes) {
+        
+        if (canais == null || canais.isEmpty()) {
+            attributes.addFlashAttribute("erro", "Selecione pelo menos um canal.");
+            return "redirect:/livros/historico";
+        }
+
+        Historico log = historicoRepository.findById(logId).orElse(null);
+        if (log == null) return "redirect:/livros/historico";
+
+        Notificador notificador = new NotificadorBase();
+
+        if (canais.contains("EMAIL") && emailDestino != null && !emailDestino.isEmpty()) {
+            notificador = new EmailDecorator(notificador, emailService, emailDestino);
+        }
+
+        if (canais.contains("WHATSAPP")) {
+            notificador = new WhatsAppDecorator(notificador);
+        }
+
+        if (canais.contains("FACEBOOK")) {
+            notificador = new FacebookDecorator(notificador);
+        }
+
+        System.out.println("\n=============================================");
+        
+        notificador.enviar(log);
+        
+        System.out.println("=============================================\n");
+
+        attributes.addFlashAttribute("mensagem", "Notificacoes disparadas com o Padrao Decorator");
         return "redirect:/livros/historico";
     }
-
-    Historico log = historicoRepository.findById(logId).orElse(null);
-    String detalhesLog = log != null ? 
-        "Ação: " + log.getAcao() + "\nID do Livro: " + log.getIdLivro() + "\nData: " + log.getDataHora() 
-        : "Detalhes não encontrados.";
-
-    for (String canal : canais) {
-        switch (canal) {
-            case "EMAIL":
-                if (emailDestino != null && !emailDestino.isEmpty()) {
-                    String assunto = "[Vulture Books] Alerta de Auditoria - Log #" + logId;
-                    String texto = "Olá!\n\nUma nova ação foi registrada no sistema:\n\n" 
-                                 + detalhesLog + "\n\nAtenciosamente,\nEquipe Vulture Books";
-                    emailService.enviarEmailSimples(emailDestino, assunto, texto);
-                }
-                break;
-            case "WHATSAPP":
-                System.out.println("[WHATSAPP] Registrando notificacao do Log #" + logId);
-                break;
-            case "FACEBOOK":
-                System.out.println("[FACEBOOK] Publicando notificacao do Log #" + logId);
-                break;
-        }
-    }
-
-    attributes.addFlashAttribute("mensagem", "Notificações disparadas com sucesso!");
-    return "redirect:/livros/historico";
-}
 }
