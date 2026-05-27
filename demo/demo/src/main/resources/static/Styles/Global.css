@@ -61,3 +61,16 @@ html, body {
     color: rgba(255,255,255,0.6);
     font-size: 14px;
 }
+
+.custom-dropdown-hover .dropdown-menu {
+    transition: all 0.2s ease-in;
+    z-index: 1050;
+}
+/* Faz o hover funcionar para abrir */
+.custom-dropdown-hover:hover .dropdown-menu {
+    display: block;
+}
+
+.custom-dropdown-hover .dropdown-menu:focus-within {
+    display: block;
+}

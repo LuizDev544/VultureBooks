@@ -17,11 +17,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class LivroController {
 
     @Autowired
-    @Qualifier("livroHistoricoDecorator") // Força o Spring a usar o Decorator com Histórico
-    private LivroOperations livroService; // Usando a interface diretamente
+    @Qualifier("livroHistoricoDecorator")
+    private LivroOperations livroService;
 
     @Autowired
     private BookDonation.demo.Domain.Repository.HistoricoRepository historicoRepository;
+
+    @Autowired
+    private EmailService emailService;
 
     // Exibe a tela de formulário para novo cadastro
     @GetMapping("/cadastrar")
@@ -134,4 +137,45 @@ public class LivroController {
         model.addAttribute("historicos", listaHistorico);
         return "PainelHistorico";
     }
+    
+    // Rota para notificar múltiplos canais a partir do histórico
+    @PostMapping("/notificar/multiplos")
+    public String notificarMultiplos(
+        @RequestParam Long logId,
+        @RequestParam(required = false) List<String> canais, 
+        @RequestParam(required = false) String emailDestino,
+        RedirectAttributes attributes) {
+    
+    if (canais == null || canais.isEmpty()) {
+        attributes.addFlashAttribute("erro", "Você precisa selecionar pelo menos um canal de notificação.");
+        return "redirect:/livros/historico";
+    }
+
+    Historico log = historicoRepository.findById(logId).orElse(null);
+    String detalhesLog = log != null ? 
+        "Ação: " + log.getAcao() + "\nID do Livro: " + log.getIdLivro() + "\nData: " + log.getDataHora() 
+        : "Detalhes não encontrados.";
+
+    for (String canal : canais) {
+        switch (canal) {
+            case "EMAIL":
+                if (emailDestino != null && !emailDestino.isEmpty()) {
+                    String assunto = "[Vulture Books] Alerta de Auditoria - Log #" + logId;
+                    String texto = "Olá!\n\nUma nova ação foi registrada no sistema:\n\n" 
+                                 + detalhesLog + "\n\nAtenciosamente,\nEquipe Vulture Books";
+                    emailService.enviarEmailSimples(emailDestino, assunto, texto);
+                }
+                break;
+            case "WHATSAPP":
+                System.out.println("[WHATSAPP] Registrando notificacao do Log #" + logId);
+                break;
+            case "FACEBOOK":
+                System.out.println("[FACEBOOK] Publicando notificacao do Log #" + logId);
+                break;
+        }
+    }
+
+    attributes.addFlashAttribute("mensagem", "Notificações disparadas com sucesso!");
+    return "redirect:/livros/historico";
+}
 }
