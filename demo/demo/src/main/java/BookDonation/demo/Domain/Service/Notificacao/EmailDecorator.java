@@ -3,23 +3,22 @@ package BookDonation.demo.Domain.Service.Notificacao;
 import BookDonation.demo.Domain.Model.Historico;
 import BookDonation.demo.Domain.Service.EmailService;
 
-public class EmailDecorator implements Notificador {
+public class EmailDecorator extends NotificadorDecorator {
     
-    private Notificador wrapper;
     private EmailService emailService;
     private String emailDestino;
 
     public EmailDecorator(Notificador wrapper, EmailService emailService, String emailDestino) {
-        this.wrapper = wrapper;
+        super(wrapper);
         this.emailService = emailService;
         this.emailDestino = emailDestino;
     }
 
     @Override
     public void enviar(Historico log) {
-        wrapper.enviar(log);
+        super.enviar(log); 
         
-        System.out.println("[E-MAIL] Enviando e-mail formatado para: " + emailDestino);
+        System.out.println("📧 [E-MAIL] Enviando e-mail formatado para: " + emailDestino);
         
         String texto = "Olá!\n\n"
                      + "Uma nova ação foi registrada no sistema:\n\n"
