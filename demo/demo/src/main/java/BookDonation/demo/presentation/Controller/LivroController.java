@@ -184,4 +184,12 @@ public class LivroController {
         attributes.addFlashAttribute("mensagem", "Notificacoes disparadas com o Padrao Decorator");
         return "redirect:/livros/historico";
     }
+
+    // Rota para ver os catalogos no painel do cliente
+    @GetMapping("/catalogo")
+    public String mostrarPainelCliente(Model model) {
+        List<Livro> listaDeLivros = livroService.listarTodosOsLivros();
+        model.addAttribute("livros", listaDeLivros);
+        return "PainelCliente";
+    }
 }

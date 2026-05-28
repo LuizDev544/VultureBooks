@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vulture Books - Livros em Destaque</title>
-    <link rel="stylesheet" href="../static/Styles/PainelCliente.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../static/Styles/PainelCliente.css">
 </head>
 <body>
 
@@ -16,108 +17,326 @@
                 <h1>Vulture Books</h1>
             </div>
             <nav class="nav-menu">
-                <a href="#" class="active">Destaques</a>
-                <a href="#">Categorias</a>
-                <a href="#">Como Doar</a>
+                <a href="#destaques" class="active">Destaques</a>
+                <a href="#categorias">Categorias</a>
+                <a href="#comodoar">Como Doar</a>
                 <a href="#">Minha Conta</a>
             </nav>
         </div>
     </header>
 
-    <section class="hero-section">
-        <h2>Livros em Destaque</h2>
-        <p>Explore as principais doações disponíveis para você ler hoje.</p>
+    <div id="landingCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#landingCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#landingCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#landingCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+
+        <div class="carousel-inner">
+            <div class="carousel-item active" data-bs-interval="5000">
+                <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=1600&auto=format&fit=crop" alt="Biblioteca Vulture Books">
+                <div class="carousel-caption text-center">
+                    <h2 class="fw-bold">Conectando Histórias, Compartilhando Conhecimento</h2>
+                    <p class="lead">Explore centenas de livros disponíveis para doação imediata.</p>
+                </div>
+            </div>
+
+            <div class="carousel-item" data-bs-interval="5000">
+                <img src="https://images.unsplash.com/photo-1513001900722-370f803f498d?q=80&w=1600&auto=format&fit=crop" alt="Doação de Livros">
+                <div class="carousel-caption text-center">
+                    <h2 class="fw-bold">Faça Espaço para Novas Leituras</h2>
+                    <p class="lead">Tem livros parados na estante? Descubra como doar de forma simples e rápida.</p>
+                </div>
+            </div>
+
+            <div class="carousel-item" data-bs-interval="5000">
+                <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=1600&auto=format&fit=crop" alt="Comunidade Leitora">
+                <div class="carousel-caption text-center">
+                    <h2 class="fw-bold">Leitura Acessível para Todos</h2>
+                    <p class="lead">Nosso objetivo é transformar comunidades através do poder dos livros.</p>
+                </div>
+            </div>
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#landingCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#landingCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Próximo</span>
+        </button>
+    </div>
+
+    <section class="news-banner">
+        <h2>Campanha de Inverno: Doe um Livro, Aqueça uma Mente!</h2>
+        <p>Durante todo este mês, estabeleceremos novos pontos de coleta espalhados pela cidade. Venha participar da nossa rede e ajude a circular conhecimento para quem mais precisa.</p>
     </section>
 
-    <main class="catalog-container">
-        <div class="books-grid">
-            
-            <article class="book-card">
-                <div class="book-cover">
-                    <div class="cover-placeholder">
-                        <i class="fa-solid fa-book"></i>
-                    </div>
-                    <span class="badge status-disponivel">Disponível</span>
-                </div>
-                <div class="book-info">
-                    <span class="book-genre">Romance</span>
-                    <h3 class="book-title">Dom Casmurro</h3>
-                    <p class="book-author">Por Machado de Assis</p>
-                    
-                    <div class="book-meta">
-                        <span><i class="fa-solid fa-calendar-days"></i> 1899</span>
-                        <span><i class="fa-solid fa-star"></i> Seminovos</span>
-                    </div>
-                    
-                    <button class="btn-view">Ver Detalhes</button>
-                </div>
-            </article>
+    <div class="search-container">
+        <form action="#" method="GET" class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" name="keyword" placeholder="Digite o título, autor ou gênero do livro que procura...">
+            <button type="submit">Buscar</button>
+        </form>
+    </div>
 
-            <article class="book-card">
-                <div class="book-cover">
-                    <div class="cover-placeholder">
-                        <i class="fa-solid fa-book"></i>
-                    </div>
-                    <span class="badge status-reservado">Reservado</span>
-                </div>
-                <div class="book-info">
-                    <span class="book-genre">Ficção</span>
-                    <h3 class="book-title">O Alquimista</h3>
-                    <p class="book-author">Por Paulo Coelho</p>
-                    
-                    <div class="book-meta">
-                        <span><i class="fa-solid fa-calendar-days"></i> 1988</span>
-                        <span><i class="fa-solid fa-star"></i> Usado</span>
-                    </div>
-                    
-                    <button class="btn-view">Ver Detalhes</button>
-                </div>
-            </article>
-
-            <article class="book-card">
-                <div class="book-cover">
-                    <div class="cover-placeholder">
-                        <i class="fa-solid fa-book"></i>
-                    </div>
-                    <span class="badge status-disponivel">Disponível</span>
-                </div>
-                <div class="book-info">
-                    <span class="book-genre">Terror</span>
-                    <h3 class="book-title">O Iluminado</h3>
-                    <p class="book-author">Por Stephen King</p>
-                    
-                    <div class="book-meta">
-                        <span><i class="fa-solid fa-calendar-days"></i> 1977</span>
-                        <span><i class="fa-solid fa-star"></i> Excelente</span>
-                    </div>
-                    
-                    <button class="btn-view">Ver Detalhes</button>
-                </div>
-            </article>
-
-            <article class="book-card">
-                <div class="book-cover">
-                    <div class="cover-placeholder">
-                        <i class="fa-solid fa-book"></i>
-                    </div>
-                    <span class="badge status-disponivel">Disponível</span>
-                </div>
-                <div class="book-info">
-                    <span class="book-genre">Ciência</span>
-                    <h3 class="book-title">Cosmos</h3>
-                    <p class="book-author">Por Carl Sagan</p>
-                    
-                    <div class="book-meta">
-                        <span><i class="fa-solid fa-calendar-days"></i> 1980</span>
-                        <span><i class="fa-solid fa-star"></i> Detalhes</span>
-                    </div>
-                    
-                    <button class="btn-view">Ver Detalhes</button>
-                </div>
-            </article>
-
+    <div class="section-white" id="destaques">
+        <div class="section-title-container">
+            <h2>Livros em Destaque</h2>
+            <p>Confira as leituras mais recomendadas e procuradas pela nossa comunidade.</p>
         </div>
-    </main>
+        <main class="catalog-container">
+            <div class="books-grid">
+                
+                <article class="book-card" th:each="livro : ${livros}">
+                    <div class="book-cover">
+                        <div class="cover-placeholder">
+                            <i class="fa-solid fa-book"></i>
+                        </div>
+                        <span class="badge" 
+                              th:classappend="${#strings.toString(livro.status) == 'DISPONIVEL' ? 'status-disponivel' : 'status-reservado'}" 
+                              th:text="${livro.status}">Disponível</span>
+                    </div>
+                    <div class="book-info">
+                        <span class="book-genre" th:text="${livro.genero}">Gênero</span>
+                        <h3 class="book-title" th:text="${livro.titulo}">Título do Livro</h3>
+                        <p class="book-author" th:text="'Por ' + ${livro.autor}">Por Autor</p>
+                        <div class="book-meta">
+                            <span><i class="fa-solid fa-calendar-days"></i> <span th:text="${livro.ano}">2026</span></span>
+                            <span><i class="fa-solid fa-star"></i> <span th:text="${livro.detalhesCondicao != null ? livro.detalhesCondicao.nivel : 'Usado'}">Excelente</span></span>
+                        </div>
+                        <button class="btn-view">Ver Detalhes</button>
+                    </div>
+                </article>
 
+                <div th:if="${#lists.isEmpty(livros)}" class="text-center w-100 py-4">
+                    <p class="text-muted text-center fs-5">Nenhum livro disponível no banco de dados.</p>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <section class="donation-banner" id="comodoar">
+        <div class="donation-container">
+            <h2>Como Doar Livros?</h2>
+            <p>Tem livros que já leu e gostaria de partilhar com a comunidade? Entre em contacto com os nossos administradores preenchendo o formulário abaixo. Enviaremos todas as instruções para a recolha ou entrega do material.</p>
+            
+            <form action="#" method="POST" class="donation-form">
+                <div class="form-group">
+                    <label for="userEmail">O seu E-mail</label>
+                    <input type="email" id="userEmail" name="email" placeholder="exemplo@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="userMessage">Descreva os livros que deseja doar (Títulos, estado de conservação, etc.)</label>
+                    <textarea id="userMessage" name="message" placeholder="Olá, gostaria de doar 3 livros de Romance que estão em ótimo estado..." required></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Enviar Mensagem ao Administrador</button>
+            </form>
+        </div>
+    </section>
+
+    <div id="categorias">
+        
+        <div class="section-blue">
+            <div class="section-title-container">
+                <h2>Gênero: Romance</h2>
+                <p>Histórias apaixonantes e clássicos da literatura sentimental.</p>
+            </div>
+            <main class="catalog-container">
+                <div class="books-grid">
+                    <th:block th:each="livro : ${livros}" th:if="${#strings.toLowerCase(livro.genero) == 'romance'}">
+                        <article class="book-card">
+                            <div class="book-cover">
+                                <div class="cover-placeholder"><i class="fa-solid fa-book"></i></div>
+                                <span class="badge" th:classappend="${#strings.toString(livro.status) == 'DISPONIVEL' ? 'status-disponivel' : 'status-reservado'}" th:text="${livro.status}">Disponível</span>
+                            </div>
+                            <div class="book-info">
+                                <span class="book-genre" th:text="${livro.genero}">Romance</span>
+                                <h3 class="book-title" th:text="${livro.titulo}">Título</h3>
+                                <p class="book-author" th:text="'Por ' + ${livro.autor}">Autor</p>
+                                <div class="book-meta">
+                                    <span><i class="fa-solid fa-calendar-days"></i> <span th:text="${livro.ano}">2026</span></span>
+                                    <span><i class="fa-solid fa-star"></i> <span th:text="${livro.detalhesCondicao != null ? livro.detalhesCondicao.nivel : 'Seminovo'}">Condição</span></span>
+                                </div>
+                                <button class="btn-view">Ver Detalhes</button>
+                            </div>
+                        </article>
+                    </th:block>
+                </div>
+            </main>
+        </div>
+
+        <div class="section-white">
+            <div class="section-title-container">
+                <h2>Gênero: Ficção Científica & Fantasia</h2>
+                <p>Viaje por novos mundos e futuros inimagináveis.</p>
+            </div>
+            <main class="catalog-container">
+                <div class="books-grid">
+                    <th:block th:each="livro : ${livros}" th:if="${#strings.contains(#strings.toLowerCase(livro.genero), 'fic') || #strings.contains(#strings.toLowerCase(livro.genero), 'fantasia')}">
+                        <article class="book-card">
+                            <div class="book-cover">
+                                <div class="cover-placeholder"><i class="fa-solid fa-book"></i></div>
+                                <span class="badge" th:classappend="${#strings.toString(livro.status) == 'DISPONIVEL' ? 'status-disponivel' : 'status-reservado'}" th:text="${livro.status}">Disponível</span>
+                            </div>
+                            <div class="book-info">
+                                <span class="book-genre" th:text="${livro.genero}">Ficção</span>
+                                <h3 class="book-title" th:text="${livro.titulo}">Título</h3>
+                                <p class="book-author" th:text="'Por ' + ${livro.autor}">Autor</p>
+                                <div class="book-meta">
+                                    <span><i class="fa-solid fa-calendar-days"></i> <span th:text="${livro.ano}">2026</span></span>
+                                    <span><i class="fa-solid fa-star"></i> <span th:text="${livro.detalhesCondicao != null ? livro.detalhesCondicao.nivel : 'Usado'}">Condição</span></span>
+                                </div>
+                                <button class="btn-view">Ver Detalhes</button>
+                            </div>
+                        </article>
+                    </th:block>
+                </div>
+            </main>
+        </div>
+
+    </div>
+
+    <section class="donation-banner" id="comodoar">
+        <div class="donation-container">
+            <h2>Como Doar Livros?</h2>
+            <p>Tem livros que já leu e gostaria de partilhar com a comunidade? Entre em contacto com os nossos administradores preenchendo o formulário abaixo. Enviaremos todas as instruções para a recolha ou entrega do material.</p>
+            
+            <form action="#" method="POST" class="donation-form">
+                <div class="form-group">
+                    <label for="userEmail">O seu E-mail</label>
+                    <input type="email" id="userEmail" name="email" placeholder="exemplo@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="userMessage">Descreva os livros que deseja doar (Títulos, estado de conservação, etc.)</label>
+                    <textarea id="userMessage" name="message" placeholder="Olá, gostaria de doar 3 livros de Romance que estão em ótimo estado..." required></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Enviar Mensagem ao Administrador</button>
+            </form>
+        </div>
+    </section>
+
+    <div id="categorias">
+        <div class="section-blue">
+            <div class="section-title-container">
+                <h2>Gênero: Romance</h2>
+                <p>Histórias apaixonantes e clássicos da literatura sentimental.</p>
+            </div>
+            <main class="catalog-container">
+                <div class="books-grid">
+                    <article class="book-card">
+                        <div class="book-cover">
+                            <div class="cover-placeholder">
+                                <i class="fa-solid fa-book"></i>
+                            </div>
+                            <span class="badge status-disponivel">Disponível</span>
+                        </div>
+                        <div class="book-info">
+                            <span class="book-genre">Romance</span>
+                            <h3 class="book-title">Dom Casmurro</h3>
+                            <p class="book-author">Por Machado de Assis</p>
+                            <div class="book-meta">
+                                <span><i class="fa-solid fa-calendar-days"></i> 1899</span>
+                                <span><i class="fa-solid fa-star"></i> Seminovos</span>
+                            </div>
+                            <button class="btn-view">Ver Detalhes</button>
+                        </div>
+                    </article>
+                </div>
+            </main>
+        </div>
+
+        <div class="section-white">
+            <div class="section-title-container">
+                <h2>Gênero: Ficção Científica & Fantasia</h2>
+                <p>Viaje por novos mundos e futuros inimagináveis.</p>
+            </div>
+            <main class="catalog-container">
+                <div class="books-grid">
+                    <article class="book-card">
+                        <div class="book-cover">
+                            <div class="cover-placeholder">
+                                <i class="fa-solid fa-book"></i>
+                            </div>
+                            <span class="badge status-reservado">Reservado</span>
+                        </div>
+                        <div class="book-info">
+                            <span class="book-genre">Ficção</span>
+                            <h3 class="book-title">O Alquimista</h3>
+                            <p class="book-author">Por Paulo Coelho</p>
+                            <div class="book-meta">
+                                <span><i class="fa-solid fa-calendar-days"></i> 1988</span>
+                                <span><i class="fa-solid fa-star"></i> Usado</span>
+                            </div>
+                            <button class="btn-view">Ver Detalhes</button>
+                        </div>
+                    </article>
+                </div>
+            </main>
+        </div>
+
+        <div class="section-blue">
+            <div class="section-title-container">
+                <h2>Gênero: Suspense & Terror</h2>
+                <p>Livros que vão te deixar preso do início ao fim com muito mistério.</p>
+            </div>
+            <main class="catalog-container">
+                <div class="books-grid">
+                    <article class="book-card">
+                        <div class="book-cover">
+                            <div class="cover-placeholder">
+                                <i class="fa-solid fa-book"></i>
+                            </div>
+                            <span class="badge status-disponivel">Disponível</span>
+                        </div>
+                        <div class="book-info">
+                            <span class="book-genre">Terror</span>
+                            <h3 class="book-title">O Iluminado</h3>
+                            <p class="book-author">Por Stephen King</p>
+                            <div class="book-meta">
+                                <span><i class="fa-solid fa-calendar-days"></i> 1977</span>
+                                <span><i class="fa-solid fa-star"></i> Excelente</span>
+                            </div>
+                            <button class="btn-view">Ver Detalhes</button>
+                        </div>
+                    </article>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>Vulture Books</h3>
+                <p>Uma plataforma dedicada a circular conhecimento e aproximar leitores através da doação de livros. O nosso objetivo é transformar comunidades através da leitura.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Links Úteis</h3>
+                <ul>
+                    <li><a href="#">Início</a></li>
+                    <li><a href="#">Como Doar</a></li>
+                    <li><a href="#">Termos de Uso</a></li>
+                    <li><a href="#">Privacidade</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Siga-nos</h3>
+                <div class="footer-socials">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Vulture Books. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/PainelCliente.js}"></script>
 </body>
 </html>
