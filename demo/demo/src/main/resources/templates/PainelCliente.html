@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="../static/Styles/PainelCliente.css">
 </head>
 <body>
-
     <header class="main-header">
         <div class="header-container">
             <div class="logo">
@@ -24,14 +23,12 @@
             </nav>
         </div>
     </header>
-
     <div id="landingCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#landingCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
             <button type="button" data-bs-target="#landingCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
             <button type="button" data-bs-target="#landingCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
         </div>
-
         <div class="carousel-inner">
             <div class="carousel-item active" data-bs-interval="5000">
                 <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=1600&auto=format&fit=crop" alt="Biblioteca Vulture Books">
@@ -40,7 +37,6 @@
                     <p class="lead">Explore centenas de livros disponíveis para doação imediata.</p>
                 </div>
             </div>
-
             <div class="carousel-item" data-bs-interval="5000">
                 <img src="https://images.unsplash.com/photo-1513001900722-370f803f498d?q=80&w=1600&auto=format&fit=crop" alt="Doação de Livros">
                 <div class="carousel-caption text-center">
@@ -48,7 +44,6 @@
                     <p class="lead">Tem livros parados na estante? Descubra como doar de forma simples e rápida.</p>
                 </div>
             </div>
-
             <div class="carousel-item" data-bs-interval="5000">
                 <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=1600&auto=format&fit=crop" alt="Comunidade Leitora">
                 <div class="carousel-caption text-center">
@@ -57,7 +52,6 @@
                 </div>
             </div>
         </div>
-
         <button class="carousel-control-prev" type="button" data-bs-target="#landingCarousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Anterior</span>
@@ -67,12 +61,10 @@
             <span class="visually-hidden">Próximo</span>
         </button>
     </div>
-
     <section class="news-banner">
         <h2>Campanha de Inverno: Doe um Livro, Aqueça uma Mente!</h2>
         <p>Durante todo este mês, estabeleceremos novos pontos de coleta espalhados pela cidade. Venha participar da nossa rede e ajude a circular conhecimento para quem mais precisa.</p>
     </section>
-
     <div class="search-container">
         <form action="#" method="GET" class="search-box">
             <i class="fa-solid fa-magnifying-glass"></i>
@@ -80,7 +72,6 @@
             <button type="submit">Buscar</button>
         </form>
     </div>
-
     <div class="section-white" id="destaques">
         <div class="section-title-container">
             <h2>Livros em Destaque</h2>
@@ -95,8 +86,8 @@
                             <i class="fa-solid fa-book"></i>
                         </div>
                         <span class="badge" 
-                              th:classappend="${#strings.toString(livro.status) == 'DISPONIVEL' ? 'status-disponivel' : 'status-reservado'}" 
-                              th:text="${livro.status}">Disponível</span>
+                            th:classappend="${#strings.toString(livro.status) == 'DISPONIVEL' ? 'status-disponivel' : 'status-reservado'}" 
+                            th:text="${livro.status}">Disponível</span>
                     </div>
                     <div class="book-info">
                         <span class="book-genre" th:text="${livro.genero}">Gênero</span>
@@ -109,36 +100,13 @@
                         <button class="btn-view">Ver Detalhes</button>
                     </div>
                 </article>
-
                 <div th:if="${#lists.isEmpty(livros)}" class="text-center w-100 py-4">
                     <p class="text-muted text-center fs-5">Nenhum livro disponível no banco de dados.</p>
                 </div>
-
             </div>
         </main>
     </div>
-
-    <section class="donation-banner" id="comodoar">
-        <div class="donation-container">
-            <h2>Como Doar Livros?</h2>
-            <p>Tem livros que já leu e gostaria de partilhar com a comunidade? Entre em contacto com os nossos administradores preenchendo o formulário abaixo. Enviaremos todas as instruções para a recolha ou entrega do material.</p>
-            
-            <form action="#" method="POST" class="donation-form">
-                <div class="form-group">
-                    <label for="userEmail">O seu E-mail</label>
-                    <input type="email" id="userEmail" name="email" placeholder="exemplo@email.com" required>
-                </div>
-                <div class="form-group">
-                    <label for="userMessage">Descreva os livros que deseja doar (Títulos, estado de conservação, etc.)</label>
-                    <textarea id="userMessage" name="message" placeholder="Olá, gostaria de doar 3 livros de Romance que estão em ótimo estado..." required></textarea>
-                </div>
-                <button type="submit" class="btn-submit">Enviar Mensagem ao Administrador</button>
-            </form>
-        </div>
-    </section>
-
     <div id="categorias">
-        
         <div class="section-blue">
             <div class="section-title-container">
                 <h2>Gênero: Romance</h2>
@@ -167,7 +135,6 @@
                 </div>
             </main>
         </div>
-
         <div class="section-white">
             <div class="section-title-container">
                 <h2>Gênero: Ficção Científica & Fantasia</h2>
@@ -196,9 +163,7 @@
                 </div>
             </main>
         </div>
-
     </div>
-
     <section class="donation-banner" id="comodoar">
         <div class="donation-container">
             <h2>Como Doar Livros?</h2>
@@ -217,7 +182,6 @@
             </form>
         </div>
     </section>
-
     <div id="categorias">
         <div class="section-blue">
             <div class="section-title-container">
@@ -246,8 +210,7 @@
                     </article>
                 </div>
             </main>
-        </div>
-
+        </div>s
         <div class="section-white">
             <div class="section-title-container">
                 <h2>Gênero: Ficção Científica & Fantasia</h2>
@@ -306,7 +269,6 @@
             </main>
         </div>
     </div>
-
     <footer class="main-footer">
         <div class="footer-container">
             <div class="footer-col">
